@@ -2,19 +2,20 @@ var orm = require("../config/orm.js");
 
 
 var burgers = {
-    selectAll = function(cb){
-        orm.selectAll("burgers", function(res) {
-            cb(res);
+    selectAll: function(callBack){
+        orm.selectAll(function(res) {
+            callBack(res);
         });
     },
-    insertOne = function(burgerName, cb){
+    insertOne: function(burgerName, callBack){
         orm.insertOne("burgers", "burger_name", burgerName, function(res) {
-            cb(res);
+            callBack(res);
         });
     },
-    updateOne = function(burger, cb){
-        orm.updateOne("burgers", objColVals, condition, function(res) {
-            cb(res);
+    updateOne: function(burger, condition, callBack){
+        var changeBurger = "burger_name = " + burger;
+        orm.updateOne("burgers", changeBurger, condition, function(res) {
+            callBack(res);
         });
     }
 };

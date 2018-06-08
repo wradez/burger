@@ -1,35 +1,26 @@
 // Import MySQL connection.
 var connection = require("../config/connection.js");
 
-//all functions written here SHOULD work, but I may need to update the arguments
 var orm = {
-  selectAll: function(cb) {
-    var queryString = "SELECT * FROM burgers;";
+  selectAll: function(callBack) {
+    var queryString = "SELECT burger_name FROM burgers;";
     connection.query(queryString, function(err, result) {
-      if (err) {
-        throw err;
-      }
-      cb(result);
+      if (err) throw err;
+      callBack(result);
     });
   },
-  insertOne: function(burgerName, cb) {
-    var queryString = "INSERT INTO burgers ";
-    queryString += "(burger_name) ";
-    queryString += "VALUES (";
-    queryString += burgerName;
-    queryString += ");";
+  insertOne: function(burgerName, callBack) {
+    var queryString = "INSERT INTO burgers (burger_name) VALUES (" + burgerName + ");";
 
     console.log(queryString);
 
     connection.query(queryString, function(err, result) {
-      if (err) {
-        throw err;
-      }
+      if (err) throw err;
 
-      cb(result);
+      callBack(result);
     });
   },
-  updateOne: function(burger, cb) {
+  updateOne: function(burger, callBack) {
     var queryString = "UPDATE burgers";
 
     queryString += " SET ";
@@ -39,11 +30,9 @@ var orm = {
 
     console.log(queryString);
     connection.query(queryString, function(err, result) {
-      if (err) {
-        throw err;
-      }
+      if (err) throw err;
 
-      cb(result);
+      callBack(result);
     });
   }
 };

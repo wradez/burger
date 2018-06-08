@@ -4,13 +4,13 @@ var burger = require("../models/burger.js");
 var router = express.Router();
 
 router.get("/", function(req, res) {
-    burger.query(function(data) {
+    burger.selectAll(function(data) {
       res.render("index", {burger: data});
     });
   });
 //starter code for adding new burgers
 router.post("/api/burgers", function(req, res) {
-    burger.create(["burger_name"], [req.body.burger_name], function(result) {
+    burger.insertOne(["burger_name"], [req.body.burger_name], function(result) {
         res.json({ id: result.insertId });
     });
 });
@@ -20,7 +20,7 @@ router.put("/api/burgers/:id", function(req, res) {
 
     console.log("condition", condition);
 
-    burger.update({
+    burger.updateOne({
         devoured: true
     }, condition, function(result) {
         if (result.changedRows == 0) {
